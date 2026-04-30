@@ -1800,14 +1800,12 @@ repeat:
   }
 
   if (durable)
-  {
     pending_flush_lsn= log_flush(write_lock.value());
-  }
 
   if (UNIV_UNLIKELY(lsn > last_lsn))
     /* Ensure that a call to log_t::archive_new_write() will be
     completed by log_t::write_checkpoint(). */
-    buf_flush_ahead(lsn, true);
+    buf_flush_ahead(lsn, false);
 
   if (pending_write_lsn || pending_flush_lsn)
   {

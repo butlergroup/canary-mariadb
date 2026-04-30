@@ -549,6 +549,7 @@ public:
     ut_ad(!resize_in_progress());
     if (resize_log.is_opened())
       lsn= std::max(lsn, first_lsn + capacity());
+    ut_ad(!(lsn & 1));
     return lsn;
   }
 

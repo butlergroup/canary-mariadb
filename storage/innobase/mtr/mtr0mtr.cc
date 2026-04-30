@@ -1110,7 +1110,8 @@ static lsn_t log_close(lsn_t lsn) noexcept
   log_t::checkpoint_margin() limit that will involve a synchronous wait
   in each write operation. */
 
-  const bool furious{checkpoint_age >= log_sys.max_checkpoint_age};
+  const bool furious= checkpoint_age >= log_sys.max_checkpoint_age &&
+    !log_sys.archive;
 
   /* If furious==true, we could set a less aggressive target
   (lsn - log_sys.max_checkpoint_age) instead of what we will be using
